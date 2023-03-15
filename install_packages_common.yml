@@ -1,0 +1,42 @@
+---
+- name: Test package installations
+  hosts: all
+  become: true
+  tasks:
+
+  - name: Install or update packages
+    apt:
+      update_cache: yes
+      upgrade: dist
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install or update package Centos
+    yum:
+      update_cache: yes
+      update_only: yes
+    when: ansible_distribution == "Amazon"
+
+
+- name: software installations
+  hosts: web
+  become: true
+  tasks:
+
+  - name: install apache
+    package:
+      update_cache: yes
+      name: 
+        - "{{ apache_package }}"
+        - "{{ vim_package }}"
+      state: latest
+
+
+- name: db installation
+  hosts: db
+  become: true
+  tasks:
+
+  - name: install mariadb
+    package:
+      name: "{{ db_package }}"
+      state: latest

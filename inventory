@@ -1,2 +1,5 @@
-172.31.94.92
-172.31.85.36
+[web]
+172.31.94.92 apache_package=httpd vim_package=vim
+
+[db]
+172.31.85.36 db_package=mariadb-server
