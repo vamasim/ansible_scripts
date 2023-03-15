@@ -1,0 +1,15 @@
+---
+- name: Test package installations
+  hosts: all
+  become: true
+  tasks:
+
+  - name: update yum cache
+    yum:
+      update_cache: yes
+
+  - name: install apache
+    yum:
+      update_cache: yes
+      name: httpd
+      state: latest

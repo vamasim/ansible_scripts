@@ -1,0 +1,11 @@
+---
+- name: Test package removal
+  hosts: all
+  become: true
+  tasks:
+
+  - name: install apache
+    yum:
+      update_cache: yes
+      name: httpd
+      state: absent
