@@ -7,9 +7,23 @@
   - name: update yum cache
     yum:
       update_cache: yes
+    when: ansible_distribution == "Amazon"
 
   - name: install apache
     yum:
       update_cache: yes
       name: httpd
       state: latest
+    when: ansible_distribution == "Amazon"
+
+  - name: update yum cache
+    apt:
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install apache
+    apt:
+      update_cache: yes
+      name: apache2
+      state: latest
+    when: ansible_distribution == "Ubuntu"
