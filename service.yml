@@ -1,0 +1,71 @@
+---
+- name: Test package installations
+  hosts: all
+  become: true
+  tasks:
+
+  - name: Install or update packages ubuntu
+    tags: always
+    apt:
+      update_cache: yes
+      upgrade: dist
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install or update package Centos
+    tags: always
+    yum:
+      update_cache: yes
+      update_only: yes
+    when: ansible_distribution == "Amazon"
+
+
+- name: software installations
+  hosts: web
+  become: true
+  tasks:
+
+  - name: install apache
+    tags: web,apache,apache2,httpd
+    package:
+      update_cache: yes
+      name: 
+        - "{{ apache_package }}"
+        - "{{ vim_package }}"
+      state: latest
+
+  - name: start and enable service after installation Amazone
+    tags: web,apache,apache2,httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+    when: ansible_distribution == "Amazon"
+
+  - name: start and enable service for Ubuntu
+    tags: web,apache,apache2,httpd
+    service:
+      name: apache2
+      state: started
+      enabled: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: copy index files
+    tags: web,apache,apache2,httpd
+    copy:
+      src: test.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
+
+- name: db installation
+  hosts: db
+  become: true
+  tasks:
+
+  - name: install mariadb
+    tags: db,mariadb
+    package:
+      name: "{{ db_package }}"
+      state: latest
