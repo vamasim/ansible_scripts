@@ -1,0 +1,26 @@
+---
+- name: create user in linux
+  hosts: all
+  become: true
+  tasks:
+
+    - name: create a user testuser10
+      user:
+        name: testuser10
+        shell: /bin/bash
+        group: root
+        comment: test user
+
+    - name: Add ansible user publick key to testuser10
+      authorized_key:
+        user: testuser10
+        state: present
+        key: "{{ lookup('file', '~/.ssh/ansible.pub') }}"
+
+    - name: copy sudoers file
+      copy:
+        src: testuser10_sudoers
+        dest: /etc/sudoers.d/testuser10_sudoers
+        mode: 0400
+        owner: root
+        group: root
