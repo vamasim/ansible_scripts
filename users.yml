@@ -6,14 +6,14 @@
 
     - name: create a user testuser10
       user:
-        name: testuser10
+        name: "{{ ansible_username }}" 
         shell: /bin/bash
         group: root
         comment: test user
 
     - name: Add ansible user publick key to testuser10
       authorized_key:
-        user: testuser10
+        user: "{{ ansible_username }}"
         state: present
         key: "{{ lookup('file', '~/.ssh/ansible.pub') }}"
 
