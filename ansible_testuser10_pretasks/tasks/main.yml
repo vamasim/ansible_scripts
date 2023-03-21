@@ -1,2 +1,16 @@
 ---
 # tasks file for ansible_testuser10_pretasks
+- name: Add ansible user publick key to testuser10
+  authorized_key:
+    user: "{{ ansible_username }}"
+    state: present
+    key: "{{ lookup('file', '~/.ssh/ansible.pub') }}"
+
+- name: copy sudoers file
+  copy:
+    src: testuser10_sudoers
+    dest: /etc/sudoers.d/testuser10_sudoers
+    mode: 0400
+    owner: root
+    group: root
+

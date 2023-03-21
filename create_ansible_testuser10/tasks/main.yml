@@ -1,2 +1,9 @@
 ---
 # tasks file for create_ansible_testuser10
+- name: create a user testuser10
+  user:
+    name: "{{ ansible_username }}"
+    shell: /bin/bash
+    group: root
+    comment: test user
+

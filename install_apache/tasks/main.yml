@@ -1,2 +1,19 @@
 ---
 # tasks file for install_apache
+  - name: install apache
+    tags: web,apache,apache2,httpd
+    package:
+      update_cache: yes
+      name:
+        - "{{ apache_package }}"
+        - "{{ vim_package }}"
+      state: latest
+
+  - name: copy index files
+    tags: web,apache,apache2,httpd
+    copy:
+      src: test.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644

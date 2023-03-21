@@ -1,0 +1,14 @@
+---
+- name: playbook with roles example
+  hosts: all
+  become: true
+  roles:
+  - update_repo
+
+- name: create user testuser10
+  hosts: db
+  become: true
+  roles:
+  - create_ansible_testuser10
+  - ansible_testuser10_pretasks
+  - install_apache

@@ -2,4 +2,4 @@
 172.31.94.92 apache_package=httpd vim_package=vim ansible_username=testuser10
 
 [db]
-172.31.85.36 db_package=mariadb-server ansible_username=testuser10
+172.31.85.36 db_package=mariadb-server ansible_username=testuser10 apache_package=apache2 vim_package=vim
